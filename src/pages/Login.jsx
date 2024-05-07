@@ -1,39 +1,64 @@
-import React, { useState } from 'react';
 
-function SignupForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-   
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+function Login() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    navigate('/dashboard'); 
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-        <input type="text"
-         placeholder='Name:' 
-         value={name} 
-         onChange={(e) => setName(e.target.value)} 
-         />
-
-        <input type="email"
-         placeholder='Email:' 
-         value={email} onChange={(e) => setEmail(e.target.value)} 
-         />
-
-        <input type="password" 
-        placeholder='Password:' 
-        value={password} onChange={(e) => setPassword(e.target.value)} 
-        />
-
-          <button type="submit">Submit</button>
-    </form>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body border border-3">
+              <h2 className="card-title">Login</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <input 
+                  className="form-control mt-4" 
+                  type="email" 
+                  name="email" 
+                  placeholder="Email" 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                   />
+                </div>
+                <div className="mb-3">
+                  <input
+                  className="form-control" 
+                  type="password" 
+                  name="password" 
+                  placeholder="Password" 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  />
+                </div>
+                <button 
+                type="submit" 
+                className="btn btn-primary"
+                  style={{ width: '505px' }}>
+                  Save
+                  
+                  </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default SignupForm;
+export default Login;
